@@ -4,6 +4,7 @@ import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.example.demo.exception.*;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
-        Product product = productRepository.findById(id);
+        Product product = productRepository.findById(id)
             .orElseThrow(() -> new ProductNotFoundException(id));
 
         product.setName(productDetails.getName());
